@@ -1,6 +1,5 @@
 package providers
 
-
 type ProviderType = string
 
 const (

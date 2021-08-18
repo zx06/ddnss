@@ -3,6 +3,7 @@ package common
 import (
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -10,7 +11,7 @@ var ipv4Providers = []func() (string, error){
 	func() (string, error) {
 
 		const apiUrl = "https://httpbin.org/ip"
-		var result =struct {
+		var result = struct {
 			Origin string `json:"origin"`
 		}{}
 		content, err := getHttpContent(apiUrl)
@@ -38,7 +39,6 @@ func getHttpContent(url string) (*[]byte, error) {
 	return &content, nil
 }
 
-
 // GetIPV4 获取本机公网ipv4地址
 func GetIPV4() (string, error) {
 	var (
@@ -53,5 +53,6 @@ func GetIPV4() (string, error) {
 			break
 		}
 	}
+	log.Printf("Now wan ipv4 is: %s", ip)
 	return ip, nil
 }

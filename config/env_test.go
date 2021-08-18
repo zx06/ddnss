@@ -45,7 +45,7 @@ func TestGetAllCfg(t *testing.T) {
 			name: "getAllCfg",
 			want: map[string]*CfgItem{
 				"test": {
-					Type: provides.ProviderType_DYNU,
+					Type:   provides.ProviderType_DYNU,
 					Domain: "test.com",
 					ApiKey: "testkey",
 				},

@@ -57,7 +57,7 @@ func (p *DynuProvider) Update() bool {
 	}
 	domains, err := dynuGetDomains(context.Background(), p.ApiKey)
 	if err != nil {
-		log.Printf("dynuGetDomains error: %v\n", err)
+		log.Printf("DynuProvider Update error: %v\n", err)
 		return false
 
 	}
@@ -65,7 +65,7 @@ func (p *DynuProvider) Update() bool {
 		if d.UnicodeName == p.Domain {
 			err = dynuUpdateDDNS(context.Background(), d.Id, p.ApiKey, p.Domain, p.IpV4)
 			if err != nil {
-				log.Printf("dynuUpdateDDNS error: %v\n", err)
+				log.Printf("DynuProvider Update error: %v\n", err)
 				return false
 			}
 			return true

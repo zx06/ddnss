@@ -2,14 +2,16 @@ package config
 
 import (
 	"os"
+	"strconv"
 	"strings"
 )
 
 const (
-	ENV_PREFIX = "DDNSS_"
-	TYPE_KEY   = "TYPE"
-	DOMAIN_KEY = "DOMAIN"
-	APIKEY_KEY = "APIKEY"
+	ENV_PREFIX   = "DDNSS_"
+	TYPE_KEY     = "TYPE"
+	DOMAIN_KEY   = "DOMAIN"
+	APIKEY_KEY   = "APIKEY"
+	INTERVAL_KEY = "INTERVAL"
 )
 
 type EnvType [2]string
@@ -37,7 +39,9 @@ func GetEnvCfg() map[string]*CfgItem {
 		}
 		// 该配置为空时才初始化
 		if _, ok := result[envData[0]]; !ok {
-			result[envData[0]] = &CfgItem{}
+			result[envData[0]] = &CfgItem{
+				Interval: 1,
+			}
 		}
 		// 根据类型获取配置项
 		switch envData[1] {
@@ -47,6 +51,12 @@ func GetEnvCfg() map[string]*CfgItem {
 			result[envData[0]].Domain = v[1]
 		case APIKEY_KEY:
 			result[envData[0]].ApiKey = v[1]
+		case INTERVAL_KEY:
+			interval, err := strconv.Atoi(v[1])
+			if err == nil {
+				result[envData[0]].Interval = interval
+			}
+
 		}
 
 	}

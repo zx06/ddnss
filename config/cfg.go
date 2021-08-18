@@ -1,15 +1,20 @@
 package config
 
 import (
-	"log"
 	"github.com/zx06/ddnss/client"
 	"github.com/zx06/ddnss/providers"
+	"log"
 )
 
 type CfgItem struct {
-	Type   providers.ProviderType
+	// ddns服务商类型
+	Type providers.ProviderType
+	// 需要绑定的域名
 	Domain string
+	// ddns服务商的api key
 	ApiKey string
+	// 更新间隔(小时,默认1小时)
+	Interval int
 }
 
 type Config struct {
@@ -36,9 +41,11 @@ func RegisterAll() []*client.DDNSClient {
 		case providers.ProviderType_DYNU:
 			p, err := providers.NewDynuProvider(v.Domain, v.ApiKey, "")
 			if err != nil {
-				log.Panicln("ddnss config error:", err)
+				log.Println("ddnss config error:", err)
+				continue
 			}
-			clients = append(clients, client.NewDDNSClient(name, p))
+			log.Printf("ddnss config: [%s] type=%s domain=%s interval=%d", name, v.Type, v.Domain, v.Interval)
+			clients = append(clients, client.NewDDNSClient(name, v.Interval, p))
 		}
 	}
 	return clients
