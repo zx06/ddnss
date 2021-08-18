@@ -1,3 +1,3 @@
 FROM alpine:latest
-ENTRYPOINT ["/usr/bin/app"]
-COPY app /usr/bin/app
+ENTRYPOINT ["/usr/bin/ddnss"]
+COPY ddnss /usr/bin/ddnss
