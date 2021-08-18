@@ -17,7 +17,7 @@ archives:
         format: zip
 dockers:
   -
-    dockerfile: Dockerfile
+    dockerfile: .goreleaser.Dockerfile
     use: buildx
     build_flag_templates:
       - "--pull"
