@@ -1,15 +1,16 @@
 builds:
-  env:
-    - CGO_ENABLED=0
-  ldflags:
-    - -s -w -X github.com/zx06/ddnss/build.Version={{.Version}} -X github.com/zx06/ddnss/build.Commit={{.ShortCommit}} -X github.com/zx06/ddnss/build.BuildDate={{.Date}}
-  goos:
-    - linux
-    - windows
-    - darwin
-  goarch:
-    - amd64
-    - arm64
+  -
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    env:
+        - CGO_ENABLED=0
+    ldflags:
+        - -s -w -X github.com/zx06/ddnss/build.Version={{.Version}} -X github.com/zx06/ddnss/build.Commit={{.ShortCommit}} -X github.com/zx06/ddnss/build.BuildDate={{.Date}}
 
 archives:
   - format: tar.gz
@@ -17,7 +18,8 @@ archives:
       - goos: windows
         format: zip
 dockers:
-  - dockerfile: .goreleaser.Dockerfile
+  -
+    dockerfile: .goreleaser.Dockerfile
     use: buildx
     build_flag_templates:
       - "--pull"
